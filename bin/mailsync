@@ -1,4 +1,16 @@
-#!/bin/sh
+#!/usr/bin/env bash
+
+#-----------------------------------------------------------------------
+# ATN-2022-04-29: Adding a few lines to make it run on MT-304565
+
+# Note: to make it more universal, you'd either source .bashrc or check where
+# Homebrew is installed
+PATH=/usr/local/bin/:$PATH
+
+# Use keychain so we reuse the agent if possible
+eval $(keychain --eval --quiet --noask --agents "gpg" \
+	$(gpg --list-keys | grep -Po "^pub .*?\/\K[0-9A-Z]*"))
+#-----------------------------------------------------------------------
 
 # - Syncs mail for all accounts, or a single account given as an argument.
 # - Displays a notification showing the number of new mails.
